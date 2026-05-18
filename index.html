@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SOS Emergency Help</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ALARM OVERLAY -->
+  <div id="alarmOverlay" class="hidden">
+    <div class="alarm-pulse"></div>
+    <div class="alarm-content">
+      <div class="alarm-icon">🚨</div>
+      <h2>ALARM ACTIVE</h2>
+      <p>Help is on the way</p>
+      <button id="stopAlarmBtn" onclick="stopAlarm()">STOP ALARM</button>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app">
+
+    <!-- HEADER -->
+    <header>
+      <div class="header-left">
+        <div class="logo-dot"></div>
+        <span class="app-name">SOS GUARD</span>
+      </div>
+      <div class="header-right">
+        <div id="batteryIndicator" class="battery-badge">
+          <span id="batteryLevel">--</span>% 🔋
+        </div>
+        <button class="icon-btn" onclick="showPage('settings')" title="Settings">⚙️</button>
+      </div>
+    </header>
+
+    <!-- STATUS BAR -->
+    <div id="statusBar" class="status-bar status-ready">
+      <span id="statusText">● Ready — Tap SOS to send emergency alert</span>
+    </div>
+
+    <!-- PAGES -->
+    <div id="page-home" class="page active">
+
+      <!-- GPS STATUS -->
+      <div class="info-cards">
+        <div class="info-card" id="gpsCard">
+          <div class="card-icon">📍</div>
+          <div class="card-body">
+            <div class="card-label">Location</div>
+            <div class="card-value" id="gpsStatus">Not acquired</div>
+          </div>
+          <button class="mini-btn" onclick="acquireLocation()">Get GPS</button>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">👥</div>
+          <div class="card-body">
+            <div class="card-label">Contacts</div>
+            <div class="card-value" id="contactCount">0 saved</div>
+          </div>
+          <button class="mini-btn" onclick="showPage('contacts')">Manage</button>
+        </div>
+      </div>
+
+      <!-- SOS BUTTON -->
+      <div class="sos-container">
+        <div class="sos-ring sos-ring-3"></div>
+        <div class="sos-ring sos-ring-2"></div>
+        <div class="sos-ring sos-ring-1"></div>
+        <button id="sosBtn" class="sos-btn" onmousedown="startSosHold()" onmouseup="cancelSosHold()" onmouseleave="cancelSosHold()" ontouchstart="startSosHold(event)" ontouchend="cancelSosHold()">
+          <span class="sos-label">SOS</span>
+          <span class="sos-sub">Hold 2s to activate</span>
+          <svg class="sos-progress" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="6"/>
+            <circle id="sosProgressCircle" cx="60" cy="60" r="54" fill="none" stroke="white" stroke-width="6"
+              stroke-dasharray="339.3" stroke-dashoffset="339.3" stroke-linecap="round"
+              transform="rotate(-90 60 60)" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="quick-actions">
+        <button class="action-btn alarm-btn" onclick="toggleAlarm()">
+          <span class="action-icon">🔊</span>
+          <span>Sound Alarm</span>
+        </button>
+        <button class="action-btn location-btn" onclick="shareLocation()">
+          <span class="action-icon">📤</span>
+          <span>Share Location</span>
+        </button>
+        <button class="action-btn call-btn" onclick="callFirstContact()">
+          <span class="action-icon">📞</span>
+          <span>Emergency Call</span>
+        </button>
+        <button class="action-btn sms-btn" onclick="sendSMSOnly()">
+          <span class="action-icon">💬</span>
+          <span>Send SMS</span>
+        </button>
+      </div>
+
+      <!-- LOG -->
+      <div class="log-section">
+        <div class="log-header">
+          <span>Activity Log</span>
+          <button class="clear-btn" onclick="clearLog()">Clear</button>
+        </div>
+        <div id="activityLog" class="activity-log">
+          <div class="log-empty">No recent activity</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACTS PAGE -->
+    <div id="page-contacts" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="showPage('home')">← Back</button>
+        <h2>Emergency Contacts</h2>
+      </div>
+
+      <div class="add-contact-form">
+        <h3>Add New Contact</h3>
+        <div class="form-row">
+          <input type="text" id="contactName" placeholder="Full Name" class="form-input" />
+        </div>
+        <div class="form-row">
+          <input type="tel" id="contactPhone" placeholder="Phone Number (e.g. +8801XXXXXXXXX)" class="form-input" />
+        </div>
+        <div class="form-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="contactPrimary" />
+            <span>Set as Primary (will be called first)</span>
+          </label>
+        </div>
+        <button class="add-contact-btn" onclick="addContact()">+ Add Contact</button>
+      </div>
+
+      <div class="contacts-list-wrap">
+        <h3>Saved Contacts</h3>
+        <div id="contactsList" class="contacts-list">
+          <div class="empty-state">No contacts added yet.<br/>Add at least one emergency contact.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div id="page-settings" class="page">
+      <div class="page-header">
+        <button class="back-btn" onclick="showPage('home')">← Back</button>
+        <h2>Settings</h2>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-label">SOS Message</div>
+        <textarea id="sosMessage" class="settings-textarea" rows="3" placeholder="Custom SOS message...">🆘 EMERGENCY! I need help! My current location: {LOCATION}</textarea>
+        <div class="settings-hint">Use {LOCATION} as placeholder for GPS link</div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-label">Options</div>
+        <label class="toggle-row">
+          <span>Auto-call first contact after SOS</span>
+          <label class="toggle">
+            <input type="checkbox" id="autoCall" checked />
+            <span class="slider"></span>
+          </label>
+        </label>
+        <label class="toggle-row">
+          <span>Play alarm sound on SOS</span>
+          <label class="toggle">
+            <input type="checkbox" id="autoAlarm" checked />
+            <span class="slider"></span>
+          </label>
+        </label>
+        <label class="toggle-row">
+          <span>Low Battery Mode (minimal UI)</span>
+          <label class="toggle">
+            <input type="checkbox" id="lowBatteryMode" />
+            <span class="slider"></span>
+          </label>
+        </label>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-label">Test</div>
+        <button class="test-btn" onclick="testAlert()">🧪 Send Test Alert (SMS preview only)</button>
+      </div>
+
+      <div class="settings-group danger-zone">
+        <div class="settings-label">Danger Zone</div>
+        <button class="danger-btn" onclick="resetApp()">🗑️ Reset All Data</button>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" id="nav-home" onclick="showPage('home')">
+        <span class="nav-icon">🏠</span><span>Home</span>
+      </button>
+      <button class="nav-btn" id="nav-contacts" onclick="showPage('contacts')">
+        <span class="nav-icon">👥</span><span>Contacts</span>
+      </button>
+      <button class="nav-btn" id="nav-settings" onclick="showPage('settings')">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

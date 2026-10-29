@@ -1,115 +1,89 @@
-# 🚨 SOS GUARD — Emergency Help App
+<div align="center">
 
-A fully offline-capable, browser-based emergency SOS app. No installation needed.
+  <h1>🚨 SOS Guard</h1>
 
----
+  <p><b>Browser-Based Emergency Distress & Rapid Alert System</b></p>
 
-## 🚀 Quick Start
+  <p>
+    A standalone, zero-installation mobile and desktop web application that delivers instant emergency response: one-touch GPS distress SMS dispatch, automated siren alarm synthesis, and primary contact speed dialing.
+  </p>
 
-1. **Open `index.html`** in any modern browser (Chrome, Edge, Firefox, Safari)
-2. **Add emergency contacts** via the Contacts tab
-3. In an emergency, **hold the SOS button for 2 seconds**
+  <p>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" /></a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML"><img src="https://img.shields.io/badge/HTML5-Semantic-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" /></a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS"><img src="https://img.shields.io/badge/CSS3-Responsive-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" /></a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API"><img src="https://img.shields.io/badge/Web_Audio-API-FF5722?style=for-the-badge" alt="Web Audio API" /></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" /></a>
+  </p>
 
----
-
-## 📱 Features
-
-### Core
-| Feature | How it works |
-|---|---|
-| **SOS Button** | Hold for 2 seconds to trigger full alert sequence |
-| **Live GPS** | Auto-acquires location; included in SMS as Google Maps link |
-| **SMS to All Contacts** | Opens SMS with pre-filled emergency message |
-| **Auto-Call** | Calls primary contact automatically after SOS |
-| **Loud Alarm** | Web Audio API generates piercing alarm sound |
-| **Low Battery Mode** | Strips animations/effects for minimal resource use |
-
-### Quick Actions (Home Screen)
-- **🔊 Sound Alarm** — Toggle alarm on/off independently
-- **📤 Share Location** — Share GPS link via device share sheet
-- **📞 Emergency Call** — Directly call primary contact
-- **💬 Send SMS** — Send SMS without full SOS trigger
+</div>
 
 ---
 
-## ⚙️ Settings
+## 📖 Overview
 
-- **Custom SOS Message** — Edit the message sent. Use `{LOCATION}` for the GPS link placeholder.
-- **Auto-call toggle** — Enable/disable auto-call on SOS
-- **Auto-alarm toggle** — Enable/disable alarm sound on SOS
-- **Low Battery Mode** — Minimal UI for battery conservation
-- **Test Alert** — Preview exactly what message will be sent
+**SOS Guard** is designed for critical moments when dialing numbers or manually sharing coordinates takes too long. Running entirely client-side with zero third-party tracking or mandatory signups, it leverages native web APIs (Geolocation, Web Audio API, Web Share, and Battery Status) to turn any smartphone or computer browser into a dedicated safety beacon.
+
+Holding the central SOS button triggers an automated 2-second fail-safe sequence: locking GPS coordinates into a Google Maps link, staging an emergency SMS to all saved contacts, synthesizing an acoustic siren, and placing an immediate phone call.
 
 ---
 
-## 📋 SMS Message Format
+## 🚀 Key Features
 
-Default:
-```
-🆘 EMERGENCY! I need help! My current location: https://maps.google.com/?q=LAT,LON
-```
-
----
-
-## 🔧 How to Use on Mobile
-
-1. Open the app in **Chrome for Android** or **Safari for iOS**
-2. Tap **Add to Home Screen** (from browser menu) for app-like access
-3. Grant **Location** and **Microphone** permissions when prompted
-
-### iOS Note:
-- SMS links open the Messages app with the message pre-filled
-- You must tap Send manually (iOS security restriction)
-
-### Android Note:
-- SMS links open your default SMS app
-- Some Android browsers auto-send; others require a tap
+- 🛑 **Fail-Safe SOS Trigger** — 2-second press-and-hold activation with haptic/visual countdown prevents accidental triggers while remaining effortless under duress.
+- 📍 **Real-Time GPS Geolocation** — Automatically acquires high-accuracy latitude and longitude coordinates, appending a direct Google Maps link to outbound emergency messages.
+- 📱 **Multi-Contact SMS Dispatch** — Opens the native mobile SMS messenger pre-populated with emergency text, coordinates, and contact recipients.
+- 🔊 **Web Audio Siren Synthesizer** — Uses the browser's native oscillator to produce an alternating high-decibel siren alarm without downloading external sound files.
+- 📞 **Direct Speed Dialing** — Immediately prompts a direct telephone call (`tel:`) to your designated primary emergency contact.
+- 🔋 **Battery-Aware Conservation** — Detects low battery thresholds via the Battery API and automatically strips non-essential animations to preserve power.
+- 🔒 **100% On-Device Privacy** — All emergency contacts and preferences are saved strictly in browser `localStorage`. No data ever touches a remote server.
 
 ---
 
-## 📞 Emergency Contacts
+## 🛠️ Tech Stack
 
-- Add contacts with **name** and **full phone number** (include country code, e.g., `+8801711XXXXXX`)
-- Mark one as **Primary** — this contact gets called first
-- You can add multiple contacts; all will receive SMS alerts
-
----
-
-## 🔋 Low Battery Mode
-
-Activates automatically if battery drops below 15%. You can also toggle it manually in Settings. It:
-- Disables animated rings around SOS button
-- Removes background gradients
-- Hides non-essential UI elements
-- Keeps core SOS functionality fully intact
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Logic & State** | Vanilla JavaScript (ES6+) | Event orchestration, countdown timers & local storage persistence |
+| **Acoustic Engine** | [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) | Client-side dual-tone audio oscillator for siren generation |
+| **Location Services** | [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) | Accurate device GPS coordinate acquisition |
+| **Styling & Motion** | Pure CSS3 (Flexbox/Grid) | Glassmorphic mobile-first design with high-contrast emergency theme |
+| **System Integration** | Web Share & Battery APIs | Native OS share sheet and power conservation detection |
 
 ---
 
-## 🗂️ File Structure
+## 💻 Getting Started
 
-```
-SOS App/
-├── index.html     ← Open this file to run the app
-├── style.css      ← Styling
-├── app.js         ← All logic
-└── README.md      ← This file
-```
+### Usage (No Build Required)
+
+Because **SOS Guard** is built with native web technologies, no build tools or package managers are required.
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/CodeByPartho/SOS-Web-App.git
+   cd SOS-Web-App
+   ```
+
+2. **Run locally**:
+   - Simply double-click `index.html` to open it in Chrome, Safari, Edge, or Firefox.
+   - Alternatively, serve via any lightweight static server:
+     ```bash
+     npx serve .
+     # or
+     python -m http.server 8000
+     ```
+
+3. **Configure Contacts**:
+   - Open the **Contacts** tab in the bottom navigation.
+   - Enter your primary emergency contact's name and phone number.
+   - You can add multiple secondary contacts to be notified via SMS.
 
 ---
 
-## 🌐 Works Offline
+## 📄 License
 
-All files are local. No internet connection needed (except for Google Maps links in SMS).
-
----
-
-## ⚠️ Important Notes
-
-- **This is a web app** — it cannot send SMS automatically without user confirmation on most devices (browser security restriction)
-- For **fully automatic silent SMS**, a native Android/iOS app would be required
-- Always test the app before an emergency
-- Keep the app bookmarked or on your home screen for fast access
+This project is licensed under the **[MIT License](LICENSE)**.
 
 ---
 
-*SOS Guard — Stay safe, stay connected.*
+<p align="center">Made with ❤️ by Partho</p>

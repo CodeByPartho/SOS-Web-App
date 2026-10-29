@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1>🚨 SOS Guard</h1>
+ <h1>SOS Guard</h1>
 
   <p><b>Browser-Based Emergency Distress & Rapid Alert System</b></p>
 
@@ -20,7 +20,7 @@
 
 ---
 
-## 📖 Overview
+## Overview
 
 **SOS Guard** is designed for critical moments when dialing numbers or manually sharing coordinates takes too long. Running entirely client-side with zero third-party tracking or mandatory signups, it leverages native web APIs (Geolocation, Web Audio API, Web Share, and Battery Status) to turn any smartphone or computer browser into a dedicated safety beacon.
 
@@ -28,19 +28,19 @@ Holding the central SOS button triggers an automated 2-second fail-safe sequence
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-- 🛑 **Fail-Safe SOS Trigger** — 2-second press-and-hold activation with haptic/visual countdown prevents accidental triggers while remaining effortless under duress.
-- 📍 **Real-Time GPS Geolocation** — Automatically acquires high-accuracy latitude and longitude coordinates, appending a direct Google Maps link to outbound emergency messages.
-- 📱 **Multi-Contact SMS Dispatch** — Opens the native mobile SMS messenger pre-populated with emergency text, coordinates, and contact recipients.
-- 🔊 **Web Audio Siren Synthesizer** — Uses the browser's native oscillator to produce an alternating high-decibel siren alarm without downloading external sound files.
-- 📞 **Direct Speed Dialing** — Immediately prompts a direct telephone call (`tel:`) to your designated primary emergency contact.
-- 🔋 **Battery-Aware Conservation** — Detects low battery thresholds via the Battery API and automatically strips non-essential animations to preserve power.
-- 🔒 **100% On-Device Privacy** — All emergency contacts and preferences are saved strictly in browser `localStorage`. No data ever touches a remote server.
+- **Fail-Safe SOS Trigger** — 2-second press-and-hold activation with haptic/visual countdown prevents accidental triggers while remaining effortless under duress.
+- **Real-Time GPS Geolocation** — Automatically acquires high-accuracy latitude and longitude coordinates, appending a direct Google Maps link to outbound emergency messages.
+- **Multi-Contact SMS Dispatch** — Opens the native mobile SMS messenger pre-populated with emergency text, coordinates, and contact recipients.
+- **Web Audio Siren Synthesizer** — Uses the browser's native oscillator to produce an alternating high-decibel siren alarm without downloading external sound files.
+- **Direct Speed Dialing** — Immediately prompts a direct telephone call (`tel:`) to your designated primary emergency contact.
+- **Battery-Aware Conservation** — Detects low battery thresholds via the Battery API and automatically strips non-essential animations to preserve power.
+- **100% On-Device Privacy** — All emergency contacts and preferences are saved strictly in browser `localStorage`. No data ever touches a remote server.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
@@ -52,7 +52,7 @@ Holding the central SOS button triggers an automated 2-second fail-safe sequence
 
 ---
 
-## 💻 Getting Started
+## Getting Started
 
 ### Usage (No Build Required)
 
@@ -65,25 +65,25 @@ Because **SOS Guard** is built with native web technologies, no build tools or p
    ```
 
 2. **Run locally**:
-   - Simply double-click `index.html` to open it in Chrome, Safari, Edge, or Firefox.
-   - Alternatively, serve via any lightweight static server:
+ - Simply double-click `index.html` to open it in Chrome, Safari, Edge, or Firefox.
+ - Alternatively, serve via any lightweight static server:
      ```bash
      npx serve .
-     # or
+ # or
      python -m http.server 8000
      ```
 
 3. **Configure Contacts**:
-   - Open the **Contacts** tab in the bottom navigation.
-   - Enter your primary emergency contact's name and phone number.
-   - You can add multiple secondary contacts to be notified via SMS.
+ - Open the **Contacts** tab in the bottom navigation.
+ - Enter your primary emergency contact's name and phone number.
+ - You can add multiple secondary contacts to be notified via SMS.
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **[MIT License](LICENSE)**.
 
 ---
 
-<p align="center">Made with ❤️ by Partho</p>
+<p align="center">Built by Partho</p>

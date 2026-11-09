@@ -56,7 +56,7 @@ function renderLog() {
   el.innerHTML = state.log.map(entry => `
     <div class="log-item log-${entry.type}">
       <span class="log-time">${entry.time}</span>
-      <span class="log-msg">${entry.msg}</span>
+      <span class="log-msg">${escapeHtml(entry.msg)}</span>
     </div>
   `).join('');
 }
@@ -105,7 +105,7 @@ async function initBattery() {
       const pct = Math.round(battery.level * 100);
       $('batteryLevel').textContent = pct;
       const badge = $('batteryIndicator');
-      badge.style.color = pct <= 20 ? '#ff6b00' : pct <= 10 ? '#ff2233' : '';
+      badge.style.color = pct <= 10 ? '#ff2233' : pct <= 20 ? '#ff6b00' : '';
       if (pct <= 15 && !$('lowBatteryMode').checked) {
         addLog(`⚠️ Low battery: ${pct}% — consider enabling Low Battery Mode`, 'warn');
       }
@@ -269,7 +269,7 @@ function renderContacts() {
       </div>
       <div class="contact-actions">
         ${!c.primary ? `<button class="contact-action" onclick="setPrimary(${c.id})" title="Set as primary">⭐</button>` : ''}
-        <button class="contact-action" onclick="callContact('${escapeHtml(c.phone)}','${escapeHtml(c.name)}')" title="Call">📞</button>
+        <button class="contact-action" onclick="callContact('${jsArg(c.phone)}','${jsArg(c.name)}')" title="Call">📞</button>
         <button class="contact-action" onclick="deleteContact(${c.id})" title="Delete">🗑️</button>
       </div>
     </div>
@@ -278,6 +278,13 @@ function renderContacts() {
 
 function escapeHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Escape a value used as a single-quoted JavaScript string argument inside
+// an inline HTML handler: JS-escape first, then HTML-escape the result.
+function jsArg(s) {
+  const jsEscaped = String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/[\r\n]/g,' ');
+  return escapeHtml(jsEscaped);
 }
 
 // ── SMS ────────────────────────────────────────────────────
